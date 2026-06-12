@@ -5,7 +5,6 @@
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
 ![SQL](https://img.shields.io/badge/SQL-Advanced-336791?style=for-the-badge&logo=postgresql&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Complete-2ea44f?style=for-the-badge)
 
 **An end-to-end SQL-driven inventory monitoring and optimization solution for a mid-sized retail chain**
 
@@ -78,17 +77,6 @@ This project simulates the complete responsibilities of a **Data Scientist in a 
 
 The raw flat file was normalized into a **Star Schema** — a standard data warehouse design with one central fact table surrounded by dimension tables.
 
-```
-                    ┌─────────────┐
-                    │  dim_date   │
-                    │  730 rows   │
-                    └──────┬──────┘
-                           │
-┌──────────────┐    ┌──────┴───────────┐    ┌───────────────┐
-│  dim_store   │    │  fact_inventory  │    │  dim_product  │
-│   5 rows     ├────┤  109,500 rows    ├────┤   30 rows     │
-└──────────────┘    └─────────────────┘    └───────────────┘
-```
 
 | Table | Type | Rows | Primary Key | Description |
 |---|---|---|---|---|
@@ -113,31 +101,24 @@ RAW DATA (CSV)
      ▼
 STAGING TABLE (inventory_forecasting)
      │
-     ▼ ETL Process (INSERT INTO ... SELECT)
+      ETL Process (INSERT INTO ... SELECT)
      │
-     ├──► dim_store      (5 rows)
-     ├──► dim_product    (30 rows)
-     ├──► dim_date       (730 rows)
-     └──► fact_inventory (109,500 rows)
+     ├── dim_store      (5 rows)
+     ├── dim_product    (30 rows)
+     ├── dim_date       (730 rows)
+     └── fact_inventory (109,500 rows)
                 │
-                ▼
+
          6 Performance Indexes
                 │
-                ▼
+
     ┌───────────────────────┐
     │  10 SQL Analytical    │
     │  Sections             │
     └───────────┬───────────┘
-                │
-        ┌───────┴────────┐
-        ▼                ▼
-   Power BI          HTML Dashboard
-   Dashboard         (Backup)
-   (5 Pages)
-        │
-        ▼
-  Executive Summary
-  + PDF Documentation
+                │            
+            Power BI         
+            Dashboard
 ```
 
 ---
@@ -261,64 +242,18 @@ urban-retail-inventory-sql/
 │
 ├── README.md
 │
-├── sql/
-│   └── urban_retail_scripts.sql     # Complete 10-section SQL script
+│── urban_retail_scripts.sql         # Complete 10-section SQL script
 │
 ├── data/
 │   └── inventory_forecasting.csv    # Raw dataset (109,500 rows)
 │
 ├── dashboard/
-│   ├── Urban_Retail_Dashboard.pbix  # Power BI dashboard file
-│   └── Urban_Retail_Dashboard.html  # Standalone HTML dashboard
-│
-└── docs/
-    ├── Executive_Summary.md
-    ├── Part1_Schema_and_Indexing.pdf
-    ├── Part2_Stock_Level_Calculations.pdf
-    ├── Part3_Low_Inventory_Detection.pdf
-    ├── Part4_Inventory_Turnover_Analysis.pdf
-    └── DataLoading_Guide.pdf
+│   ├── Urban_Retail_Dashboard.pdf   # Power BI dashboard file
+
 ```
 
 ---
 
-## 🚀 How to Run This Project
-
-### Prerequisites
-- MySQL 8.0 or higher
-- MySQL Workbench (recommended)
-- Power BI Desktop (for dashboard)
-
-### Step 1 — Set Up the Database
-```sql
-CREATE DATABASE urban_retail_co;
-USE urban_retail_co;
-```
-
-### Step 2 — Import Raw Data
-```
-1. Open MySQL Workbench
-2. Use Table Data Import Wizard
-3. Import inventory_forecasting.csv
-   into table: inventory_forecasting
-```
-
-### Step 3 — Run the SQL Script
-```
-1. Open urban_retail_scripts.sql in MySQL Workbench
-2. Run Section 0 (Schema) first
-3. Run the INSERT scripts to populate tables
-4. Run Section 1 (Indexes)
-5. Run Sections 2-10 for all analytics
-```
-
-### Step 4 — Open the Dashboard
-```
-Power BI: Open Urban_Retail_Dashboard.pbix
-          Connect to your local MySQL instance
-          
-HTML:     Open Urban_Retail_Dashboard.html
-          in any browser — no setup needed
 ```
 
 ---
